@@ -14,7 +14,7 @@ import (
 func main() {
 	filename := "20180724_143905.jpg"
 	src := "./testfiles/" + filename
-	dst := "./testfiles/" + time.Now().Format("2006-01-02_150405") + "_" + filename
+	dst := "./testfiles/" + time.Now().Format("2006-01-02_15-04-05-00") + "_" + filename
 
 	err := CopyFile(src, dst)
 	if err != nil {
