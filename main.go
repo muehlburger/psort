@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"io"
 	"io/ioutil"
 	"log"
@@ -31,7 +30,6 @@ func CopyFile(src, dst string) error {
 	}
 	defer in.Close()
 
-	fmt.Printf("creationTime: %s:", CreationTime(in))
 	tmp, err := ioutil.TempFile(filepath.Dir(dst), "")
 	if err != nil {
 		return err
