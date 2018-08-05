@@ -8,7 +8,7 @@ psort sorts photos based on date
 
 ## Features
 
-- **Copy ** files from source directories to one target directory
+- **Copy** files from source directories to one target directory
 
 - **Rename** copied files to a date format.
 
