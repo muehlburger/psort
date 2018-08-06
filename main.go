@@ -44,6 +44,7 @@ func main() {
 
 // CopyFile copies files from src to destination.
 func CopyFile(src, dst string) error {
+	//TODO copy only images
 	in, err := os.Open(src)
 	if err != nil {
 		return err
