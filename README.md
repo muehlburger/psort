@@ -25,7 +25,7 @@ go get github.com/muehlburger/psort
 Copy photos:
 
 ```bash
-psort -s /home/herbert/pic1,/home/herbert/pic1,/home/herbert/pic1 target
+psort photos-to-sort photos-1-sorted
 ```
 
 ## Authors

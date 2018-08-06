@@ -1,9 +1,7 @@
 package main
 
 import (
-	"fmt"
 	"io"
-	"io/ioutil"
 	"log"
 	"os"
 	"path/filepath"
@@ -13,17 +11,16 @@ import (
 	"github.com/rwcarlsen/goexif/mknote"
 )
 
-// psort -s source -t
 func main() {
 	src, _ := os.Getwd()
-	dst := "./export"
+	dst := "export"
 
 	if len(os.Args) > 1 {
 		src = os.Args[1]
 	}
 
 	src, err := filepath.Abs(src)
-	log.Printf("source: %v", src)
+	log.Printf("sourcefile: %v", src)
 	if err != nil {
 		log.Fatalf("absolute %s: %v", src, err)
 	}
@@ -31,64 +28,58 @@ func main() {
 	filename := filepath.Base(src)
 	log.Printf("filename: %s", filename)
 
+	log.Printf("destination: %v", dst)
+	os.MkdirAll(dst, 0744)
+
 	dst, err = filepath.Abs(filepath.Join(dst, filename))
 	if err != nil {
 		log.Fatalf("absolute %s: %v", dst, err)
 	}
 	log.Printf("destination: %v", dst)
 
-	if err = CopyFile(src, dst, filename); err != nil {
+	if err = CopyFile(src, dst); err != nil {
 		log.Fatal(err)
 	}
 }
 
 // CopyFile copies files from src to destination.
-func CopyFile(src, dst, filename string) error {
+func CopyFile(src, dst string) error {
 	in, err := os.Open(src)
-
 	if err != nil {
 		return err
 	}
 	defer in.Close()
 
-	tm, err := getCreationDatetime(src)
-	if err != nil {
-		return err
-	}
+	//	tm, err := getCreationDatetime(src)
+	//	if err != nil {
+	//		return err
+	//	}
+	//
+	//filename := fmt.Sprintf("%v-%v-%v-%v", tm.Year(), tm.Month(), tm.Day(), tm.Minute())
+	//path := filepath.Join(dst, filename)
 
 	log.Printf("creating file: %s", dst)
-	tmp, err := ioutil.TempFile(filepath.Dir(dst), "")
+	out, err := os.OpenFile(dst, os.O_RDWR|os.O_CREATE, 0644)
 	if err != nil {
-		return err
-	}
-	_, err = io.Copy(tmp, in)
-	if err != nil {
-		tmp.Close()
-		os.Remove(tmp.Name())
 		return err
 	}
 
-	if err = tmp.Close(); err != nil {
-		return err
-	}
+	defer func() {
+		if e := out.Close(); e != nil {
+			err = e
+		}
+	}()
+	_, err = io.Copy(out, in)
 
 	fi, err := os.Stat(in.Name())
 	if err != nil {
 		return err
 	}
 
-	if err = os.Chmod(tmp.Name(), fi.Mode()); err != nil {
-		os.Remove(tmp.Name())
+	if err = os.Chmod(out.Name(), fi.Mode()); err != nil {
+		os.Remove(out.Name())
 		return err
 	}
-
-	if err = os.Rename(tmp.Name(), dst); err != nil {
-		os.Remove(tmp.Name())
-		return err
-	}
-
-	fmt.Printf("%s", tm)
-
 	return nil
 }
 
