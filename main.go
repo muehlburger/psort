@@ -8,7 +8,11 @@ import (
 	"log"
 	"os"
 	"path/filepath"
+	"strings"
 	"time"
+
+	"github.com/rwcarlsen/goexif/exif"
+	"github.com/rwcarlsen/goexif/mknote"
 )
 
 var verbose = flag.Bool("v", false, "show verbose progress messages")
@@ -51,6 +55,12 @@ loop:
 		}
 	}
 	printPaths(nfiles, names)
+	for _, f := range names {
+		if err := CopyFile(f); err != nil {
+			log.Fatal(err)
+		}
+	}
+
 }
 
 //func main() {
@@ -84,21 +94,15 @@ loop:
 //}
 
 // CopyFile copies files from src to destination.
-func CopyFile(src, dst string) error {
+func CopyFile(path string) error {
 	//TODO copy only images
-	in, err := os.Open(src)
+	in, err := os.Open(path)
 	if err != nil {
 		return err
 	}
 	defer in.Close()
 
-	//	tm, err := getCreationDatetime(src)
-	//	if err != nil {
-	//		return err
-	//	}
-	//
-	//filename := fmt.Sprintf("%v-%v-%v-%v", tm.Year(), tm.Month(), tm.Day(), tm.Minute())
-	//path := filepath.Join(dst, filename)
+	dst := createFile(path)
 
 	log.Printf("creating file: %s", dst)
 	out, err := os.OpenFile(dst, os.O_RDWR|os.O_CREATE, 0644)
@@ -126,36 +130,36 @@ func CopyFile(src, dst string) error {
 }
 
 // CreationTime extracts the creation Date of the given File.
-//func getCreationDatetime(path string) (time.Time, error) {
-//	f, err := os.Open(path)
-//	if err != nil {
-//		return time.Time{}, err
-//	}
-//	defer f.Close()
-//
-//	exif.RegisterParsers(mknote.All...)
-//
-//	x, err := exif.Decode(f)
-//	if err != nil {
-//		return time.Time{}, err
-//	}
-//
-//	tm, err := x.DateTime()
-//	if err != nil {
-//		return time.Time{}, err
-//	}
-//
-//	return tm, nil
-//}
+func getCreationDatetime(path string) (time.Time, error) {
+	f, err := os.Open(path)
+	if err != nil {
+		return time.Time{}, err
+	}
+	defer f.Close()
 
-//func createFile(infile string) string {
-//	ext := strings.ToLower(filepath.Ext(infile)) // e.g., ".jpg", ".JPEG"
-//	outfile := strings.TrimSuffix(infile, ext) + ".renamed" + ext
-//	fmt.Printf("infile: %v\n", infile)
-//	fmt.Printf("ext: %v\n", ext)
-//	fmt.Printf("outfile: %v\n", outfile)
-//	return outfile
-//}
+	exif.RegisterParsers(mknote.All...)
+
+	x, err := exif.Decode(f)
+	if err != nil {
+		return time.Time{}, err
+	}
+
+	tm, err := x.DateTime()
+	if err != nil {
+		return time.Time{}, err
+	}
+
+	return tm, nil
+}
+
+func createFile(infile string) string {
+	ext := strings.ToLower(filepath.Ext(infile)) // e.g., ".jpg", ".JPEG"
+	outfile := strings.TrimSuffix(infile, ext) + ".renamed" + ext
+	fmt.Printf("infile: %v\n", infile)
+	fmt.Printf("ext: %v\n", ext)
+	fmt.Printf("outfile: %v\n", outfile)
+	return outfile
+}
 
 func printPaths(nfiles int64, paths []string) {
 	fmt.Printf("%d files found:\n", nfiles)
