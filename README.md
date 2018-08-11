@@ -1,10 +1,10 @@
-# psort
+# sortphotos
 
-psort sorts photos based on date
+sortphotos sorts photos based on date
 
 [Features](#features) | [Installation](#installation) | [Usage](#usage) | [Examples](#examples) | [Command-line options](#options) | [Configuration](#configuration)
 
-![screenshot](https://raw.githubusercontent.com/muehlburger/psort/master/docs/screenshot.png)
+![screenshot](https://raw.githubusercontent.com/muehlburger/sortphotos/master/docs/screenshot.png)
 
 ## Features
 
@@ -15,7 +15,7 @@ psort sorts photos based on date
 ## Installation
 
 ```bash
-go get github.com/muehlburger/psort
+go get -u github.com/muehlburger/sortphotos
 ```
 
 ## Usage
@@ -25,16 +25,16 @@ go get github.com/muehlburger/psort
 Copy photos:
 
 ```bash
-psort photos-to-sort photos-1-sorted
+sortphotos photos-to-sort photos-1-sorted
 ```
 
 ## Authors
 
-[Herbert Mühlburger](https://github.com/muehlburger) and [contributors](https://github.com/muehlburger/psort/graphs/contributors).
+[Herbert Mühlburger](https://github.com/muehlburger) and [contributors](https://github.com/muehlburger/sortphotos/graphs/contributors).
 
 ## License
 
 [Apache 2.0 License](LICENSE)
 
-[report-card-image]: https://goreportcard.com/badge/github.com/muehlburger/psort
-[report-card-url]: https://goreportcard.com/report/github.com/muehlburger/psort
+[report-card-image]: https://goreportcard.com/badge/github.com/muehlburger/sortphotos
+[report-card-url]: https://goreportcard.com/report/github.com/muehlburger/sortphotos
