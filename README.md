@@ -8,9 +8,11 @@ sortphotos sorts photos based on EXIF information and flattens the directory str
 
 ## Features
 
-- **Copy** files from source directories to one target directory
-
-- **Rename** copied files to a date format.
+- Supports multiple source directories
+- **Flattens** source directory structure
+- **Copies** files from source directories to one target directory
+- **Renames** copied files using EXIF information to the following format: YYYY-MM-DD-HH-MM-SS.[jpg|jpeg|png] -> e.g. 2018-04-20_193419.jpg
+- **Supports** jpg, jpeg and png
 
 ## Installation
 
