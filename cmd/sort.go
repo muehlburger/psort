@@ -60,7 +60,6 @@ func init() {
 var supportedExtensions = map[string]bool{
 	".jpg":  true,
 	".jpeg": true,
-	".png":  true,
 }
 
 func sort(roots []string, dst string, verbose bool) error {

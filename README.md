@@ -1,6 +1,6 @@
 # sortphotos
 
-sortphotos sorts photos based on EXIF information and flattens the directory structure.
+sortphotos sorts photos based on Exif information and flattens the directory structure.
 
 [Features](#features) | [Installation](#installation) | [Usage](#usage) | [Examples](#examples) | [Command-line options](#options) | [Configuration](#configuration)
 
@@ -8,11 +8,11 @@ sortphotos sorts photos based on EXIF information and flattens the directory str
 
 ## Features
 
-- Supports multiple source directories
+- Supports **multiple source directories**
 - **Flattens** source directory structure
-- **Copies** files from source directories to one target directory
-- **Renames** copied files using EXIF information to the following format: YYYY-MM-DD-HH-MM-SS.[jpg|jpeg|png] -> e.g. 2018-04-20_193419.jpg
-- **Supports** jpg, jpeg and png
+- **Copies** files from source to target directory
+- **Renames** copied files using Exif information to the following format: YYYY-MM-DD-HH-MM-SS.[jpg|jpeg] -> e.g. 2018-04-20_193419.jpg
+- **Supports** jpg, jpeg
 
 ## Installation
 
