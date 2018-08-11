@@ -1,6 +1,6 @@
 # sortphotos
 
-sortphotos sorts photos based on date
+sortphotos sorts photos based on EXIF information and flattens the directory structure.
 
 [Features](#features) | [Installation](#installation) | [Usage](#usage) | [Examples](#examples) | [Command-line options](#options) | [Configuration](#configuration)
 
